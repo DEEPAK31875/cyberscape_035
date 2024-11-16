@@ -21,7 +21,6 @@ Streamlit :- https://cyberscape035-fwqiqufmhydal6wxegduqg.streamlit.app
 ## Technology Stack
 List and provide a brief overview of the technologies used in the project.
 
-- Node.js
-- Express.js
-- MongoDB
-- Other libraries/modules
+- python
+- pandas
+- Streamlit
