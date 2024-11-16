@@ -7,7 +7,7 @@ df = pd.read_csv('Time-Wasters on Social Media.csv')
 
 
 # Title and Introduction
-st.title("User Engagement Dashboard")
+st.title("Cyberscape_35")
 st.write("Explore insights and KPIs from user engagement data.")
 
 # Sidebar for Filters
