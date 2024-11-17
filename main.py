@@ -19,15 +19,15 @@ age_range = st.sidebar.slider("Select Age Range", 0, 100, (20, 50))
 filtered_df = df[(df['Gender'] == selected_gender) & (df['Age'].between(age_range[0], age_range[1]))]
 
 # 1. User Demographics Distribution
-st.subheader("User Demographics")
+st.subheader("Counts of gender")
 gender_counts = filtered_df['Gender'].value_counts()
 st.bar_chart(gender_counts)
 
 # 2. Income vs. Debt
 st.subheader("Income vs. Debt")
 income_debt_data = filtered_df[['Income', 'Debt']]
-st.write("Income vs. Debt Scatter Plot")
-st.scatter_chart(income_debt_data)
+st.write("Income vs. Debt Bar Plot")
+st.bar_chart(income_debt_data)
 
 # 3. Engagement by Platform
 st.subheader("Engagement by Platform")
