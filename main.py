@@ -32,7 +32,7 @@ st.bar_chart(income_debt_data)
 # 3. Engagement by Platform
 st.subheader("Engagement by Platform")
 platform_engagement = df.groupby('Platform')['Engagement'].sum().reset_index()
-st.pie_chart(platform_engagement.set_index('Platform')['Engagement'])
+st.bar_chart(platform_engagement.set_index('Platform')['Engagement'])
 
 # 4. Average Time Spent on Videos by Category
 st.subheader("Average Time Spent on Videos by Category")
