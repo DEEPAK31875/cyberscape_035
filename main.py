@@ -17,7 +17,7 @@ platform_filter = st.sidebar.multiselect("Select Platform", options=df.Platform.
 
 
 # Filter data based on selections
-filtered_df = df[(df['Gender'] == selected_gender) & (df['Age'].between(age_range[0], age_range[1]))&(data['Platform'].isin(platform_filter))]
+filtered_df = df[(df['Gender'] == selected_gender) & (df['Age'].between(age_range[0], age_range[1]))&(df['Platform'].isin(platform_filter))]
 
 st.subheader("Key Performance Indicators")
 st.metric("Total Time Spent (hours)", int(filtered_data['Total Time Spent'].sum()))
