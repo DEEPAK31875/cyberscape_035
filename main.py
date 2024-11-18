@@ -1,12 +1,27 @@
-
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+uploaded_file = st.file_uploader("Time-Wasters on Social Media.csv")
+if uploaded_file is not None:
+    data = pd.read_csv(uploaded_file)
+else:
+    st.warning("Time-Wasters on Social Media.csv")
 
-df = pd.read_csv('Time-Wasters on Social Media.csv')
+@st.cache  # Cache the data to improve performance
+def load_data():
+    return pd.read_csv('Time-Wasters on Social Media.csv')  # Update with the correct path
 
+data = load_data()
+
+data.head()
+
+st.title("Time-Wasters on Social Media Analysis")
+st.write("""
+    This app provides insights into social media usage patterns and the impact on user productivity.
+    Use the filters and interactive elements to explore the data.
+""")
 
 st.sidebar.header("Filter Data")
 
@@ -59,3 +74,4 @@ filtered_data = filtered_data[(filtered_data['Addiction Level'] >= addiction_sli
 # Checkbox for displaying raw data
 if st.checkbox("Show Raw Data"):
     st.write(filtered_data)
+
