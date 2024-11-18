@@ -46,7 +46,7 @@ st.metric("Average Addiction Level", round(filtered_data['Addiction Level'].mean
 
 st.subheader("Age Distribution of Users")
 fig, ax = plt.subplots()
-sns.histplot(filtered_data['Age'], bins=20, ax=ax)
+st.histplot(filtered_data['Age'], bins=20, ax=ax)
 st.pyplot(fig)
 
 
@@ -57,13 +57,13 @@ st.bar_chart(platform_time)
 st.subheader("User Engagement by Video Category")
 
 fig, ax = plt.subplots()
-sns.boxplot(data=filtered_data, x='Video Category', y='Engagement', ax=ax)
+st.boxplot(data=filtered_data, x='Video Category', y='Engagement', ax=ax)
 st.pyplot(fig)
 
 
 st.subheader("Scroll Rate vs. Productivity Loss")
 fig, ax = plt.subplots()
-sns.scatterplot(data=filtered_data, x='Scroll Rate', y='ProductivityLoss', hue='Platform', ax=ax)
+st.scatter_plot(data=filtered_data, x='Scroll Rate', y='ProductivityLoss', hue='Platform', ax=ax)
 st.pyplot(fig)
 
 # Slider for selecting Addiction Level range
