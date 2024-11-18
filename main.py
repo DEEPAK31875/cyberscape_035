@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import seaborn as sns
 
 uploaded_file = st.file_uploader("Time-Wasters on Social Media.csv")
 if uploaded_file is not None:
