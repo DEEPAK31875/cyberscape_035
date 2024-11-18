@@ -13,9 +13,17 @@ st.write("Explore insights and KPIs from user engagement data.")
 st.sidebar.header("Filters")
 selected_gender = st.sidebar.selectbox("Select Gender", df['Gender'].unique())
 age_range = st.sidebar.slider("Select Age Range", 0, 100, (20, 50))
+platform_filter = st.sidebar.multiselect("Select Platform", options=data.Platform.unique(), default=df.Platform.unique())
+
 
 # Filter data based on selections
-filtered_df = df[(df['Gender'] == selected_gender) & (df['Age'].between(age_range[0], age_range[1]))]
+filtered_df = df[(df['Gender'] == selected_gender) & (df['Age'].between(age_range[0], age_range[1]))&(data['Platform'].isin(platform_filter))]
+
+st.subheader("Key Performance Indicators")
+st.metric("Total Time Spent (hours)", int(filtered_data['Total Time Spent'].sum()))
+st.metric("Average Productivity Loss", round(filtered_data['ProductivityLoss'].mean(), 2))
+st.metric("Average Addiction Level", round(filtered_data['Addiction Level'].mean(), 2))
+
 
 # 1. User Demographics Distribution
 st.subheader("User Demographics")
