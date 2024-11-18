@@ -1,75 +1,65 @@
 import streamlit as st
 import pandas as pd
 
-uploaded_file = st.file_uploader("Time-Wasters on Social Media.csv")
-if uploaded_file is not None:
-    data = pd.read_csv(uploaded_file)
-else:
-    st.warning("Time-Wasters on Social Media.csv")
 
-@st.cache  # Cache the data to improve performance
-def load_data():
-    return pd.read_csv('Time-Wasters on Social Media.csv')  # Update with the correct path
-
-data = load_data()
-
-data.head()
-
-st.title("Time-Wasters on Social Media Analysis")
-st.write("""
-    This app provides insights into social media usage patterns and the impact on user productivity.
-    Use the filters and interactive elements to explore the data.
-""")
-
-st.sidebar.header("Filter Data")
-
-# Age filter
-age_filter = st.sidebar.slider("Select Age Range", int(data.Age.min()), int(data.Age.max()), (20, 50))
-
-# Gender filter
-gender_filter = st.sidebar.multiselect("Select Gender", options=data.Gender.unique(), default=data.Gender.unique())
-
-# Platform filter
-platform_filter = st.sidebar.multiselect("Select Platform", options=data.Platform.unique(), default=data.Platform.unique())
-
-# Filter the data based on the selected options
-filtered_data = data[(data['Age'] >= age_filter[0]) & (data['Age'] <= age_filter[1]) &
-                     (data['Gender'].isin(gender_filter)) &
-                     (data['Platform'].isin(platform_filter))]
+df = pd.read_csv('C:/Users/Dell/Desktop/cyberscape/Time-Wasters on Social Media.csv')
 
 
-st.subheader("Key Performance Indicators")
-st.metric("Total Time Spent (hours)", int(filtered_data['Total Time Spent'].sum()))
-st.metric("Average Productivity Loss", round(filtered_data['ProductivityLoss'].mean(), 2))
-st.metric("Average Addiction Level", round(filtered_data['Addiction Level'].mean(), 2))
+# Title and Introduction
+st.title("User Engagement Dashboard")
+st.write("Explore insights and KPIs from user engagement data.")
 
-st.subheader("Age Distribution of Users")
-fig, ax = plt.subplots()
-st.histplot(filtered_data['Age'], bins=20, ax=ax)
-st.pyplot(fig)
+# Sidebar for Filters
+st.sidebar.header("Filters")
+selected_gender = st.sidebar.selectbox("Select Gender", df['Gender'].unique())
+age_range = st.sidebar.slider("Select Age Range", 0, 100, (20, 50))
 
+# Filter data based on selections
+filtered_df = df[(df['Gender'] == selected_gender) & (df['Age'].between(age_range[0], age_range[1]))]
 
-st.subheader("Platform Usage by Total Time Spent")
-platform_time = filtered_data.groupby('Platform')['Total Time Spent'].sum().sort_values()
-st.bar_chart(platform_time)
+# 1. User Demographics Distribution
+st.subheader("User Demographics")
+gender_counts = filtered_df['Gender'].value_counts()
+st.bar_chart(gender_counts)
 
-st.subheader("User Engagement by Video Category")
+# 2. Income vs. Debt
+st.subheader("Income vs. Debt")
+income_debt_data = filtered_df[['Income', 'Debt']]
+st.write("Income vs. Debt Scatter Plot")
+st.scatter_chart(income_debt_data)
 
-fig, ax = plt.subplots()
-st.boxplot(data=filtered_data, x='Video Category', y='Engagement', ax=ax)
-st.pyplot(fig)
+# 3. Engagement by Platform
+st.subheader("Engagement by Platform")
+platform_engagement = df.groupby('Platform')['Engagement'].sum().reset_index()
+st.bar_chart(platform_engagement.set_index('Platform')['Engagement'])
 
+# 4. Average Time Spent on Videos by Category
+st.subheader("Average Time Spent on Videos by Category")
+avg_time = df.groupby('Video Category')['Time Spent On Video'].mean().reset_index()
+st.line_chart(avg_time.set_index('Video Category')['Time Spent On Video'])
 
-st.subheader("Scroll Rate vs. Productivity Loss")
-fig, ax = plt.subplots()
-st.scatter_plot(data=filtered_data, x='Scroll Rate', y='ProductivityLoss', hue='Platform', ax=ax)
-st.pyplot(fig)
+# 5. Average Satisfaction Score
+st.subheader("Average Satisfaction Score by Profession")
+avg_satisfaction = df.groupby('Profession')['Satisfaction'].mean().reset_index()
+st.bar_chart(avg_satisfaction.set_index('Profession')['Satisfaction'])
 
-# Slider for selecting Addiction Level range
-addiction_slider = st.slider("Select Addiction Level Range", int(data['Addiction Level'].min()), int(data['Addiction Level'].max()), (1, 10))
-filtered_data = filtered_data[(filtered_data['Addiction Level'] >= addiction_slider[0]) & (filtered_data['Addiction Level'] <= addiction_slider[1])]
+# 6. Debt to Income Ratio
+st.subheader("Debt to Income Ratio Distribution")
+df['Debt to Income Ratio'] = df['Debt'] / df['Income'].replace(0, 1)  # Avoid division by zero
+st.line_chart(df['Debt to Income Ratio'])
 
-# Checkbox for displaying raw data
-if st.checkbox("Show Raw Data"):
-    st.write(filtered_data)
+# 7. Video Watch Time by Device Type
+st.subheader("Watch Time by Device Type")
+device_watch_time = df.groupby('DeviceType')['Watch Time'].sum().reset_index()
+st.bar_chart(device_watch_time.set_index('DeviceType')['Watch Time'])
+
+# 8. Scroll Rate by Video Length
+st.subheader("Scroll Rate by Video Length")
+scroll_rate_length = df[['Video Length', 'Scroll Rate']].groupby('Video Length').mean().reset_index()
+st.line_chart(scroll_rate_length.set_index('Video Length')['Scroll Rate'])
+
+# 9. Engagement Over Time
+st.subheader("Engagement Over Time")
+engagement_over_time = df.groupby('Platform')['Engagement'].mean().reset_index()
+st.line_chart(engagement_over_time.set_index('Platform')['Engagement'])
 
