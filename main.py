@@ -13,7 +13,7 @@ st.write("Explore insights and KPIs from user engagement data.")
 st.sidebar.header("Filters")
 selected_gender = st.sidebar.selectbox("Select Gender", df['Gender'].unique())
 age_range = st.sidebar.slider("Select Age Range", 0, 100, (20, 50))
-platform_filter = st.sidebar.multiselect("Select Platform", options=data.Platform.unique(), default=df.Platform.unique())
+platform_filter = st.sidebar.multiselect("Select Platform", options=df.Platform.unique(), default=df.Platform.unique())
 
 
 # Filter data based on selections
