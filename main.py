@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 
-df = pd.read_csv('C:/Users/Dell/Desktop/cyberscape/Time-Wasters on Social Media.csv')
+df = pd.read_csv('Time-Wasters on Social Media.csv')
 
 
 # Title and Introduction
