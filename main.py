@@ -20,9 +20,9 @@ platform_filter = st.sidebar.multiselect("Select Platform", options=df.Platform.
 filtered_df = df[(df['Gender'] == selected_gender) & (df['Age'].between(age_range[0], age_range[1]))&(df['Platform'].isin(platform_filter))]
 
 st.subheader("Key Performance Indicators")
-st.metric("Total Time Spent (hours)", int(filtered_data['Total Time Spent'].sum()))
-st.metric("Average Productivity Loss", round(filtered_data['ProductivityLoss'].mean(), 2))
-st.metric("Average Addiction Level", round(filtered_data['Addiction Level'].mean(), 2))
+st.metric("Total Time Spent (hours)", int(filtered_df['Total Time Spent'].sum()))
+st.metric("Average Productivity Loss", round(filtered_df['ProductivityLoss'].mean(), 2))
+st.metric("Average Addiction Level", round(filtered_df['Addiction Level'].mean(), 2))
 
 
 # 1. User Demographics Distribution
